@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <string>
+using namespace std;
 
 typedef uint64_t U64; // aliases an unsigned 64 bit integer to U64
 
@@ -26,3 +27,11 @@ U64 blackPieces = blackPawns | blackKnights | blackBishops | blackRooks | blackQ
 
 U64 occupied = whitePieces | blackPieces;
 U64 unOccupied = ~occupied;
+
+int squareToBit (string square){
+    char file = square[0];
+    char rank = square[1];
+    int fileIndex = file - 'a';
+    int rankIndex = rank - '1';
+    return rankIndex*8+fileIndex;
+}
