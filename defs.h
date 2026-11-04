@@ -1,6 +1,26 @@
 #ifndef DEFS_H
 #define DEFS_H
 
+#include "stdlib.h"
+
+// Used for testing but will slow down when running
+// When testing, we can use this to assert that we are getting expected values
+// When not testing, comment out #define DEBUG so that the code is not slowed down
+#define DEBUG
+
+#ifndef DEBUG
+#define ASSERT(n)
+#else
+#define ASSERT(n) \
+if(!(n)) { \
+    printf("%s - Failed ", #n); \
+    printf("On %s ", __DATE__); \
+    printf("At %s ", __TIME__); \
+    printf("In File %s", __FILE__); \
+    printf("At Line %d\n", __LINE__);\
+    exit(1);}
+#endif
+
 // Unsigned 64 bit integer
 typedef unsigned long long U64;
 
@@ -79,6 +99,10 @@ typedef struct {
 
     S_UNDO history[MAXGAMEMOVES];
 
+    // Piece List
+    // Stores the position of pieces for each type
+    int pList[13][10];
+
 } S_BOARD;
 
 // GLOBALS
@@ -87,8 +111,14 @@ extern int Sq64ToSq120[64];
 
 // MACROS
 #define FR2SQ(f, r) ((21 + (f)) + (r*10))
+#define SQ64(sq120) Sq120ToSq64[sq120]
 
 // FUNCTIONS
+
+//init.c
 extern void AllInit();
+
+// bitboards.c
+extern void PrintBitBoard(U64 bb);
 
 #endif
