@@ -9,6 +9,9 @@ typedef unsigned long long U64;
 // Number of squares for the "board"
 #define BRD_SQ_NUM 120
 
+// allows for 2048 plys
+#define MAXGAMEMOVES 2048
+
 enum { EMPTY, wP, wN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK};
 
 enum { RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8, RANK_NONE };
@@ -28,5 +31,54 @@ enum {
 };
 
 enum { FALSE, TRUE};
+
+// (Colour)(Side)CA
+enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};
+
+typedef struct {
+
+    int move;
+    int castlePerm;
+    int enPas;
+    int fiftyMove;
+    U64 posKey;
+
+} S_UNDO;
+
+
+typedef struct {
+
+    int pieces[BRD_SQ_NUM];
+
+    // Index 0 - White, Index 1 - Black, Index 2 - Both (Index 1 | Index 2)
+    U64 pawns[3];
+    U64 kingSq[2];
+
+    int side;
+    int enPas;
+    int fiftyMove;
+
+    int ply;
+    int hisPly;
+
+    int castlePerm;
+
+    U64 posKey;
+
+    // Each index is the number of that piece
+    //e.g. EMPTY = 0, wP = 1, etc
+    int pceNum[13];
+
+    // 0 is white, 1 is black, 2 is both
+    // Non-pawn pieces
+    int bigPce[3];
+    // Rooks & Queens
+    int majPce[3];
+    // Bishops & Knights
+    int minPce[3];
+
+    S_UNDO history[MAXGAMEMOVES];
+
+} S_BOARD;
 
 #endif
