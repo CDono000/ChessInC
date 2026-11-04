@@ -81,4 +81,14 @@ typedef struct {
 
 } S_BOARD;
 
+// GLOBALS
+extern int Sq120ToSq64[BRD_SQ_NUM];
+extern int Sq64ToSq120[64];
+
+// MACROS
+#define FR2SQ(f, r) ((21 + (f)) + (r*10))
+
+// FUNCTIONS
+extern void AllInit();
+
 #endif
