@@ -13,7 +13,7 @@
 #else
 #define ASSERT(n) \
 if(!(n)) { \
-    printf("%s - Failed ", #n); \
+    printf("\n%s - Failed ", #n); \
     printf("On %s ", __DATE__); \
     printf("At %s ", __TIME__); \
     printf("In File %s ", __FILE__); \
@@ -130,6 +130,9 @@ extern int PieceMin[13];
 extern int PieceVal[13];
 extern int PieceCol[13];
 
+extern int FilesBrd[BRD_SQ_NUM];
+extern int RanksBrd[BRD_SQ_NUM];
+
 
 // MACROS
 #define FR2SQ(f, r) ((21 + (f)) + (r*10))
@@ -158,5 +161,6 @@ extern void ResetBoard(S_BOARD *pos);
 extern int ParseFEN(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
 extern void UpdateListsMaterial(S_BOARD *pos);
+extern int CheckBoard(const S_BOARD *pos);
 
 #endif
