@@ -57,6 +57,11 @@ enum { FALSE, TRUE};
 // (Colour)(Side)CA
 enum { WKCA = 1, WQCA = 2, BKCA = 4, BQCA = 8};
 
+typedef struct{
+    int move;
+    int score;
+} S_MOVE;
+
 typedef struct {
 
     int move;
@@ -109,7 +114,7 @@ typedef struct {
 
 } S_BOARD;
 
-// GLOBALS
+/* GLOBALS */
 extern int Sq120ToSq64[BRD_SQ_NUM];
 extern int Sq64ToSq120[64];
 
@@ -133,17 +138,46 @@ extern int PieceCol[13];
 extern int FilesBrd[BRD_SQ_NUM];
 extern int RanksBrd[BRD_SQ_NUM];
 
+extern int PieceKnight[13];
+extern int PieceKing[13];
+extern int PieceRookQueen[13];
+extern int PieceBishopQueen[13];
 
-// MACROS
+
+/* MACROS */
 #define FR2SQ(f, r) ((21 + (f)) + (r*10))
 #define SQ64(sq120) Sq120ToSq64[sq120]
 #define SQ120(sq64) Sq64ToSq120[sq64]
+
 #define POP(b) PopBit(b)
 #define CNT(b) CountBits(b)
 #define SETBIT(bb, sq) ((bb) |= SetMask[(sq)])
 #define CLRBIT(bb, sq) ((bb) &= ClearMask[(sq)])
 
-// FUNCTIONS
+#define IsBQ(p) (PieceBishopQueen[(p)])
+#define IsRQ(p) (PieceRookQueen[(p)])
+#define IsKn(p) (PieceKnight[(p)])
+#define IsKi(p) (PieceKing[(p)])
+
+//Used to encode/decode move information into a binary number
+// Square moving prom - Bit 1 to Bit 7
+#define FROMSQ(m) ((m) & 0x7F)
+// Square moving to - Bit 7 to Bit 14
+#define TOSQ(m) (((m) >> 7) & 0x7F)
+// Piece Captured - Bit 15 to Bit 18
+#define CAPTURED(m) (((m) >> 14) & 0xF)
+// Piece Promoted to - Bit 21 to Bit 24
+#define PROMOTED(m) (((m) >> 20) & 0xF)
+// En Passent - Bit 19
+#define MFLAGEP 0x40000
+// Pawn Start - Bit 20
+#define MFLAGPS 0x80000
+// Castle - Bit 25
+#define MFLAGCA 0x1000000
+#define MFLAGCAP 0x7C000
+#define MFLAGPROM 0xF00000
+
+/* FUNCTIONS */
 
 //init.c
 extern void AllInit();
@@ -162,5 +196,8 @@ extern int ParseFEN(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
 extern void UpdateListsMaterial(S_BOARD *pos);
 extern int CheckBoard(const S_BOARD *pos);
+
+//attack.c
+extern int SqAttacked(const int sq, const int side, const S_BOARD *pos);
 
 #endif
