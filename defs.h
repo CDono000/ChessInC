@@ -93,11 +93,13 @@ typedef struct {
 
     // 0 is white, 1 is black, 2 is both
     // Non-pawn pieces
-    int bigPce[3];
+    int bigPce[2];
     // Rooks & Queens
-    int majPce[3];
+    int majPce[2];
     // Bishops & Knights
-    int minPce[3];
+    int minPce[2];
+    // Material Score
+    int material[2];
 
     S_UNDO history[MAXGAMEMOVES];
 
@@ -110,15 +112,23 @@ typedef struct {
 // GLOBALS
 extern int Sq120ToSq64[BRD_SQ_NUM];
 extern int Sq64ToSq120[64];
+
 extern U64 SetMask[64];
 extern U64 ClearMask[64];
 extern U64 PieceKeys[13][120];
 extern U64 SideKey;
 extern U64 CastleKeys[16];
+
 extern char PceChar[];
 extern char SideChar[];
 extern char RankChar[];
 extern char FileChar[];
+
+extern int PieceBig[13];
+extern int PieceMaj[13];
+extern int PieceMin[13];
+extern int PieceVal[13];
+extern int PieceCol[13];
 
 
 // MACROS
@@ -147,5 +157,6 @@ extern U64 GeneratePosKey(const S_BOARD *pos);
 extern void ResetBoard(S_BOARD *pos);
 extern int ParseFEN(char *fen, S_BOARD *pos);
 extern void PrintBoard(const S_BOARD *pos);
+extern void UpdateListsMaterial(S_BOARD *pos);
 
 #endif

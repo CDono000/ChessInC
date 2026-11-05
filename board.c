@@ -1,6 +1,31 @@
 #include "stdio.h"
 #include "defs.h"
 
+
+void UpdateListsMaterial(S_BOARD *pos){
+    int piece, sq, index, colour;
+
+    for (index = 0; index < BRD_SQ_NUM; ++index){
+        sq = index;
+        piece = pos -> pieces[index];
+        if (piece != OFFBOARD && piece != EMPTY){
+            colour = PieceCol[piece];
+            if (PieceBig[piece] == TRUE) pos -> bigPce[colour]++;
+            if (PieceMaj[piece] == TRUE) pos -> majPce[colour]++;
+            if (PieceMin[piece] == TRUE) pos -> minPce[colour]++;
+
+            pos -> material[colour] += PieceVal[piece];
+
+            pos -> pList[piece][pos -> pceNum[piece]] = sq;
+            pos -> pceNum[piece]++;
+
+            if (piece == wK) pos-> kingSq[WHITE] = sq;
+            if (piece == bK) pos-> kingSq[BLACK] = sq;
+        }
+    }
+}
+
+
 int ParseFEN(char *fen, S_BOARD *pos){
 
     ASSERT(fen != NULL);
@@ -108,6 +133,8 @@ int ParseFEN(char *fen, S_BOARD *pos){
 
     pos -> posKey = GeneratePosKey(pos);
 
+    UpdateListsMaterial(pos);
+
     return 0;
 }
 
@@ -154,12 +181,13 @@ void ResetBoard(S_BOARD *pos){
         pos -> pieces[SQ120(index)] = EMPTY;
     }
 
-    for (index = 0; index < 3; ++index){
+    for (index = 0; index < 2; ++index){
         pos -> pawns[index] = 0ULL;
         pos -> bigPce[index] = 0;
         pos -> majPce[index] = 0;
         pos -> minPce[index] = 0;
     }
+    pos -> pawns[2] = 0ULL;
 
     for(index = 0; index < 13; ++index){pos -> pceNum[index] = 0;}
 
