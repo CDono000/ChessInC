@@ -16,7 +16,7 @@ if(!(n)) { \
     printf("%s - Failed ", #n); \
     printf("On %s ", __DATE__); \
     printf("At %s ", __TIME__); \
-    printf("In File %s", __FILE__); \
+    printf("In File %s ", __FILE__); \
     printf("At Line %d\n", __LINE__);\
     exit(1);}
 #endif
@@ -115,6 +115,10 @@ extern U64 ClearMask[64];
 extern U64 PieceKeys[13][120];
 extern U64 SideKey;
 extern U64 CastleKeys[16];
+extern char PceChar[];
+extern char SideChar[];
+extern char RankChar[];
+extern char FileChar[];
 
 
 // MACROS
@@ -141,5 +145,7 @@ extern U64 GeneratePosKey(const S_BOARD *pos);
 
 // board.c
 extern void ResetBoard(S_BOARD *pos);
+extern int ParseFEN(char *fen, S_BOARD *pos);
+extern void PrintBoard(const S_BOARD *pos);
 
 #endif
