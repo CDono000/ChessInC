@@ -10,16 +10,15 @@
 int main(){
     AllInit();
 
-    S_BOARD board[1];
+    // S_BOARD board[1];
 
-    ParseFEN(FEN4, board);
-    PrintBoard(board);
-    ASSERT(CheckBoard(board));
+    // ParseFEN(FEN4, board);
+    // PrintBoard(board);
+    // ASSERT(CheckBoard(board));
 
     int move = 0;
-
-    int from = 6; int to = 12;
-    int cap = wR; int prom = bR;
+    int from = A2; int to = H7;
+    int cap = wR; int prom = bQ;
     move = from | (to << 7) | (cap << 14) | (prom << 20);
 
     printf("\ndec:%d\nhex:%X\nbin:", move, move);
@@ -31,6 +30,11 @@ int main(){
         if (index!=28 && index%4==0){printf(" ");}
     }
     printf("\n\nfrom:%d\nto:%d\ncap:%d\nprom:%d\n", FROMSQ(move), TOSQ(move), CAPTURED(move), PROMOTED(move));
+
+    printf("\nAlgebraic From: %s", PrSq(from));
+    printf("\nAlgebraic To: %s", PrSq(to));
+    printf("\nAlgebraic From: %s\n", PrMv(move));
+
 
     return 0;
 }
