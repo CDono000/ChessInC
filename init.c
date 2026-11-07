@@ -30,7 +30,7 @@ void InitFilesRanksBrd(){
         RanksBrd[index] = OFFBOARD;
     }
     
-    for (rank = RANK_1; rank < RANK_8; ++rank){
+    for (rank = RANK_1; rank <= RANK_8; ++rank){
         for (file = FILE_A; file <= FILE_H; ++file){
             sq = FR2SQ(file, rank);
             FilesBrd[sq] = file;

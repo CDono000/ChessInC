@@ -18,6 +18,5 @@ The purpose of this project is to develop my own coding skills and using AI to h
 
 # Important Links
 Here are links I will use for developing the engine as well as coming up with ideas on how to improve my bot
-Youtube Playlist for C - https://www.youtube.com/playlist?list=PLZ1QII7yudbc-Ky058TEaOstZHVbT-2hg
 Chess Programming Wiki - https://chessprogramming.org/
 Sebastian Lague - https://www.youtube.com/watch?v=U4ogK0MIzqk
